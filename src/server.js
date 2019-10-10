@@ -20,19 +20,18 @@ import cors from 'cors';
             port: REDIS_PORT
         })
 
-        var whitelist = ['http://localhost:3000','http://localhost:4000']
-        var corsOptions = {
-          credentials: true,
-          origin: function (origin, callback) {
-            if (whitelist.indexOf(origin) !== -1) {
-              callback(null, true)
-            } else {
-              callback(new Error('Not allowed by CORS'))
-            }
-          }
-        }
+        // var whitelist = ['http://localhost:3000','http://localhost:4000']
+        // var corsOptions = {
+        //   origin: function (origin, callback) {
+        //     if (whitelist.indexOf(origin) == -1) {
+        //       callback(null, true)
+        //     } else {
+        //       callback(new Error('Not allowed by CORS'))
+        //     }
+        //   }
+        // }
 
-        app.use(cors(corsOptions));
+        // app.use(cors(corsOptions));
 
         app.use(session({
             store,
@@ -55,11 +54,12 @@ import cors from 'cors';
         server.applyMiddleware({ app });
 
         app.get('/api/v1/todos', (req, res) => {
-          console.log('REQ ===> ', req.headers.cookie);
+          console.log('REQ HEADERS ===> ', req.headers);
           // var cookie = req.headers.cookie.split('=')[1];
           // console.log('cookie json ==> ', JSON.parse(cookie) );
           res.status(200).send({
             success: 'true',
+            data : [],
             message: 'todos retrieved successfully'
           })
         });
